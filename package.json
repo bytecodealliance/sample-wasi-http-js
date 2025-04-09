@@ -1,0 +1,30 @@
+{
+  "name": "sample-wasi-http-js",
+  "version": "0.1.0",
+  "description": "Sample project demonstratingu JS project targeting WASI http",
+  "license": "(Apache-2.0 WITH LLVM-exception)",
+  "author": "Tomasz Andrzejak",
+  "type": "module",
+  "scripts": {
+    "bundle": "rollup -c",
+    "build": "npm run bundle && componentize-js  --aot --wit wit -o dist/server.component.wasm dist/bundle.js",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "lint": "eslint src/**/*.js",
+    "test": "vitest --run"
+  },
+  "devDependencies": {
+    "@bytecodealliance/componentize-js": "*",
+    "@rollup/plugin-node-resolve": "*",
+    "@eslint/js": "^9.24.0",
+    "eslint": "^9.24.0",
+    "globals": "^16.0.0",
+    "just-install": "*",
+    "prettier": "^3.5.3",
+    "rollup": "^4.37.0",
+    "vitest": "^3.1.1",
+    "wait-on": "^8.0.3"
+  },
+  "dependencies": {
+    "itty-router": "^5.0.18"
+  }
+}
