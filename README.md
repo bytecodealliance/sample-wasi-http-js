@@ -43,6 +43,10 @@ $ npm build
 $ wasmtime serve -S common dist/server.component.wasm
 ```
 
+## See Also
+
+- [sample-wasi-http-rust](https://github.com/bytecodealliance/sample-wasi-http-rust) An example `wasi:http` server component written in Rust.
+
 ## License
 
 Apache-2.0 with LLVM Exception
