@@ -1,0 +1,13 @@
+{
+  "name": "wasi-http-js",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "settings": {
+  },
+  "extensions": [
+  ],
+  "forwardPorts": [8080],
+  "remoteUser": "node"
+}
