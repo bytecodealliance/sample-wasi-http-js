@@ -1,6 +1,6 @@
 # Sample: `wasi:http` in JavaScript
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/andreiltd/sample-wasi-http-js)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/bytecodealliance/sample-wasi-http-js)
 
 An example project showing how to build a spec-compliant
 [`wasi:http/proxy`][wasi-http] server for WASI 0.2 written in JavaScript.
