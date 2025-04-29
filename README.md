@@ -5,8 +5,6 @@
 An example project showing how to build a spec-compliant
 [`wasi:http/proxy`][wasi-http] server for WASI 0.2 written in JavaScript.
 
-Check also the sibling Rust project [`sample-wasi-http-rust`][rust-sample]
-
 ## Routes
 
 The following HTTP routes are available from the component:
@@ -42,6 +40,10 @@ $ npm install
 $ npm build
 $ wasmtime serve -S common dist/server.component.wasm
 ```
+
+## See Also
+
+- [sample-wasi-http-rust](https://github.com/bytecodealliance/sample-wasi-http-rust) An example `wasi:http` server component written in Rust.
 
 ## License
 
