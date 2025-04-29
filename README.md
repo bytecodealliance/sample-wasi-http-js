@@ -5,8 +5,6 @@
 An example project showing how to build a spec-compliant
 [`wasi:http/proxy`][wasi-http] server for WASI 0.2 written in JavaScript.
 
-Check also the sibling Rust project [`sample-wasi-http-rust`][rust-sample]
-
 ## Routes
 
 The following HTTP routes are available from the component:
