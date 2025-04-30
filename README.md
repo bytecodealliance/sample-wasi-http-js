@@ -53,7 +53,7 @@ Alternatively, run:
 ```bash
 $ npm install
 $ npm run build
-$ wasmtime serve -S common dist/server.component.wasm
+$ wasmtime serve -S common dist/sample-wasi-http-js.wasm
 ```
 
 ## See Also

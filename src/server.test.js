@@ -1,7 +1,7 @@
 import { describe, it, beforeAll, afterAll, expect } from "vitest";
 import { spawn } from "child_process";
 
-import waitOn from 'wait-on';
+import waitOn from "wait-on";
 
 const PORT = 8080;
 const timeout = 30000;
@@ -13,7 +13,7 @@ describe("Integration tests for the WASI HTTP server endpoints", () => {
   beforeAll(async () => {
     serverProcess = spawn(
       "wasmtime",
-      ["serve", "-S", "common", "dist/server.component.wasm"],
+      ["serve", "-S", "common", "dist/sample-wasi-http-js.wasm"],
       { stdio: "inherit" },
     );
 
@@ -22,7 +22,7 @@ describe("Integration tests for the WASI HTTP server endpoints", () => {
       resources: [`tcp:localhost:${PORT}`],
       timeout,
       delay: 1000,
-      interval: 500
+      interval: 500,
     });
   }, timeout);
 

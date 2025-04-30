@@ -2,13 +2,19 @@
   "name": "sample-wasi-http-js",
   "version": "0.1.0",
   "description": "Sample project demonstratingu JS project targeting WASI http",
+  "homepage": "https://github.com/bytecodealliance/sample-wasi-http-js",
   "license": "(Apache-2.0 WITH LLVM-exception)",
   "author": "Tomasz Andrzejak",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bytecodealliance/sample-wasi-http-js"
+  },
   "scripts": {
     "bundle": "rollup -c",
-    "build": "npm run bundle && componentize-js  --aot --wit wit -o dist/server.component.wasm dist/bundle.js",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "build": "npm run bundle && componentize-js --aot --wit wit -o dist/$npm_package_name.wasm dist/bundle.js",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css}\"",
+    "format-ci": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "lint": "eslint src/**/*.js",
     "test": "vitest --run"
   },
