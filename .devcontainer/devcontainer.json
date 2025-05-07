@@ -4,10 +4,8 @@
     "dockerfile": "Dockerfile",
     "context": ".."
   },
-  "settings": {
-  },
-  "extensions": [
-  ],
+  "settings": {},
+  "extensions": [],
   "forwardPorts": [8080],
   "remoteUser": "node"
 }

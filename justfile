@@ -1,3 +1,5 @@
+package-name := trim_start_match(trim_end_match(`npm pkg get name`, "\""), "\"")
+
 alias b := build
 
 # List all recipes
@@ -27,4 +29,4 @@ test: build
 
 serve: build
     @echo 'Serving guest...'
-    wasmtime serve -S common dist/server.component.wasm
+    wasmtime serve -S common dist/{{package-name}}.wasm

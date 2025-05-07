@@ -1,0 +1,101 @@
+# This file is based on work by authors of
+# https://github.com/bytecodealliance/sample-wasi-http-rust
+
+name: Build and publish a Wasm Component to GitHub Artifacts
+
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      packages: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+          cache: 'npm'
+
+      - name: Set up just
+        uses: extractions/setup-just@v3
+
+      - name: Extract package information
+        run: |
+          echo "COMPONENT_NAME=$(npm pkg get name | tr -d '"')" >> $GITHUB_ENV
+          echo "COMPONENT_DESCRIPTION=$(npm pkg get description | tr -d '"')" >> $GITHUB_ENV
+          echo "COMPONENT_SOURCE=$(npm pkg get repository.url | tr -d '"')" >> $GITHUB_ENV
+          echo "COMPONENT_HOMEPAGE=$(npm pkg get homepage | tr -d '"')" >> $GITHUB_ENV
+          echo "COMPONENT_LICENSES=$(npm pkg get license | tr -d '"')" >> $GITHUB_ENV
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.actor }}/${{ env.COMPONENT_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build the component
+        run: just build
+
+      - name: Normalize COMPONENT_NAME and Append .wasm
+        run: echo "COMPONENT_NAME_UNDERSCORED=${COMPONENT_NAME//-/_}.wasm" >> $GITHUB_ENV
+
+      - name: Install cosign
+        if: github.event_name != 'workflow_dispatch'
+        uses: sigstore/cosign-installer@v3.7.0
+
+      - name: Publish `:<version>` to GitHub Container Registry
+        if: github.event_name != 'workflow_dispatch'
+        id: publish_versioned
+        uses: bytecodealliance/wkg-github-action@v5
+        with:
+          file: dist/${{ env.COMPONENT_NAME_UNDERSCORED }}
+          oci-reference-without-tag: ghcr.io/${{ env.IMAGE_NAME }}/${{ env.COMPONENT_NAME }}
+          version: ${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+          description: ${{ env.COMPONENT_DESCRIPTION }}
+          source: ${{ env.COMPONENT_SOURCE }}
+          homepage: ${{ env.COMPONENT_HOMEPAGE }}
+          licenses: ${{ env.COMPONENT_LICENSES }}
+
+      - name: Sign the versioned wasm component
+        if: github.event_name != 'workflow_dispatch'
+        run: cosign sign --yes ghcr.io/${{ env.IMAGE_NAME }}/${{ env.COMPONENT_NAME }}@${{ steps.publish_versioned.outputs.digest }}
+
+      - name: Publish `:latest` release to GitHub Container Registry
+        if: github.event_name != 'workflow_dispatch'
+        id: publish_latest
+        uses: bytecodealliance/wkg-github-action@v5
+        with:
+          file: dist/${{ env.COMPONENT_NAME_UNDERSCORED }}
+          oci-reference-without-tag: ghcr.io/${{ env.IMAGE_NAME }}/${{ env.COMPONENT_NAME }}
+          version: latest
+          description: ${{ env.COMPONENT_DESCRIPTION }}
+          source: ${{ env.COMPONENT_SOURCE }}
+          homepage: ${{ env.COMPONENT_HOMEPAGE }}
+          licenses: ${{ env.COMPONENT_LICENSES }}
+
+      - name: Sign the latest wasm component
+        if: github.event_name != 'workflow_dispatch'
+        run: cosign sign --yes ghcr.io/${{ env.IMAGE_NAME }}/${{ env.COMPONENT_NAME }}@${{ steps.publish_latest.outputs.digest }}
