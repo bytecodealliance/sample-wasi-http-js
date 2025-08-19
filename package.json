@@ -13,6 +13,7 @@
   "scripts": {
     "bundle": "rollup -c",
     "build": "npm run bundle && componentize-js --aot --wit wit -o dist/$npm_package_name.wasm dist/bundle.js",
+    "build:debug": "npm run bundle && componentize-js --use-debug-build --runtime-args \"--enable-script-debugging\" --wit wit-debug -o dist/$npm_package_name.wasm dist/bundle.js",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "format-ci": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "lint": "eslint src/**/*.js",
