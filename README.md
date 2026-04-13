@@ -64,8 +64,8 @@ $ npm test            # Run tests
 $ npm run fmt         # Format code
 $ npm run fmt:check   # Check formatting
 $ npm run lint        # Lint code
-$ npm run fetch-wit   # Fetch WIT dependencies
-$ npm run update-wit  # Update WIT lock file
+$ npm run wit:fetch   # Fetch WIT dependencies
+$ npm run wit:update  # Update WIT lock file
 ```
 
 ## See Also

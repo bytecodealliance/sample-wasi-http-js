@@ -1,7 +1,7 @@
-package wasi:clocks@0.2.3;
+package wasi:clocks@0.2.10;
 
 interface monotonic-clock {
-  use wasi:io/poll@0.2.3.{pollable};
+  use wasi:io/poll@0.2.10.{pollable};
 
   type instant = u64;
 
