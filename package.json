@@ -1,6 +1,6 @@
 {
   "name": "sample-wasi-http-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sample project demonstratingu JS project targeting WASI http",
   "homepage": "https://github.com/bytecodealliance/sample-wasi-http-js",
   "license": "(Apache-2.0 WITH LLVM-exception)",
