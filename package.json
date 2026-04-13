@@ -13,7 +13,9 @@
   "scripts": {
     "bundle": "rolldown -c",
     "build": "npm run bundle && componentize-js --wit wit -o dist/$npm_package_name.wasm dist/bundle.js",
+    "build:hono": "npm run bundle -- --input src/server-hono.js && componentize-js --wit wit -o dist/$npm_package_name.wasm dist/bundle.js",
     "serve": "npm run build && wasmtime serve -S common dist/$npm_package_name.wasm",
+    "serve:hono": "npm run build:hono && wasmtime serve -S common dist/$npm_package_name.wasm",
     "fetch-wit": "wkg wit fetch",
     "update-wit": "wkg wit update",
     "fmt": "oxfmt",
@@ -23,6 +25,7 @@
     "test": "vitest --run"
   },
   "dependencies": {
+    "hono": "^4.12.12",
     "itty-router": "^5.0.23"
   },
   "devDependencies": {
