@@ -11,11 +11,9 @@ describe("Integration tests for the WASI HTTP server endpoints", () => {
   let serverProcess;
 
   beforeAll(async () => {
-    serverProcess = spawn(
-      "wasmtime",
-      ["serve", "-S", "common", "dist/sample-wasi-http-js.wasm"],
-      { stdio: "inherit" },
-    );
+    serverProcess = spawn("wasmtime", ["serve", "-S", "common", "dist/sample-wasi-http-js.wasm"], {
+      stdio: "inherit",
+    });
 
     // Wait for the server to become available
     await waitOn({

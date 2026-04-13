@@ -34,6 +34,7 @@ $ curl -H "Content-Type: text/plain" --data-binary @test_file.txt http://localho
 ```
 
 ## Quick Start
+
 The project uses [`Wasmtime`][wasmtime] as its runtime. However, if needed, it
 can easily be adjusted to use [`jco`][jco] instead. For `wasmtime` installation,
 simply run:
@@ -42,18 +43,29 @@ simply run:
 $ curl https://wasmtime.dev/install.sh -sSf | bash
 ```
 
-The quickest way to start is by using [`just`][just].
-```bash
-$ just serve # to build and serve the wasm component on `localhost:8080`
-$ curl localhost:8080 # to send requests to component.
-```
-
-Alternatively, run:
+To build and serve the wasm component on `localhost:8080`:
 
 ```bash
 $ npm install
-$ npm run build
-$ wasmtime serve -S common dist/sample-wasi-http-js.wasm
+$ npm run serve
+```
+
+Then send requests to the component:
+
+```bash
+$ curl localhost:8080
+```
+
+## Development
+
+```bash
+$ npm run build       # Build the wasm component
+$ npm test            # Run tests
+$ npm run fmt         # Format code
+$ npm run fmt:check   # Check formatting
+$ npm run lint        # Lint code
+$ npm run fetch-wit   # Fetch WIT dependencies
+$ npm run update-wit  # Update WIT lock file
 ```
 
 ## See Also
@@ -65,7 +77,6 @@ $ wasmtime serve -S common dist/sample-wasi-http-js.wasm
 Apache-2.0 with LLVM Exception
 
 [jco]: https://github.com/bytecodealliance/jco
-[just]: https://github.com/casey/just
 [rust-sample]: https://github.com/bytecodealliance/sample-wasi-http-rust
 [wasi-http]: https://github.com/WebAssembly/wasi-http
 [wasmtime]: https://wasmtime.dev/

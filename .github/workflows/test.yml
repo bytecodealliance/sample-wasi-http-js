@@ -16,19 +16,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '23'
-          cache: 'npm'
-      - name: Set up just
-        uses: extractions/setup-just@v3
+          node-version: "23"
+          cache: "npm"
       - name: Install Wasmtime
         run: |
           curl https://wasmtime.dev/install.sh -sSf | bash
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build the project
-        run: just build
+        run: npm ci && npm run build
       - name: Run tests
         run: npm test
       - name: Run format checks
-        run: npm run format-ci
-      - name: Run ESLint
+        run: npm run fmt:check
+      - name: Run linter
         run: npm run lint

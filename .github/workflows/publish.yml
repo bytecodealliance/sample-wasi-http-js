@@ -27,11 +27,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '23'
-          cache: 'npm'
-
-      - name: Set up just
-        uses: extractions/setup-just@v3
+          node-version: "23"
+          cache: "npm"
 
       - name: Extract package information
         run: |
@@ -57,7 +54,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build the component
-        run: just build
+        run: npm ci && npm run build
 
       - name: Normalize COMPONENT_NAME and Append .wasm
         run: echo "COMPONENT_NAME_UNDERSCORED=${COMPONENT_NAME//-/_}.wasm" >> $GITHUB_ENV
